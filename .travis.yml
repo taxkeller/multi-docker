@@ -14,6 +14,13 @@ after_success:
     - docker build -t taxkeller/multi-server ./server
     - docker build -t taxkeller/multi-worker ./worker
 
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    - docker push taxkeller/multi-client
+    - docker push taxkeller/multi-nginx
+    - docker push taxkeller/multi-server
+    - docker push taxkeller/multi-worker
+
 deploy:
     provider: elasticbeanstalk
     region: ap-southeast-1
